@@ -4570,7 +4570,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.Wait,
 		C3.Plugins.Sprite.Acts.SetVisible,
 		C3.Behaviors.Pin.Acts.PinByImagePoint,
-		C3.Plugins.System.Acts.SetCanvasSize,
 		C3.Behaviors.Pin.Cnds.IsPinned,
 		C3.Plugins.System.Acts.GoToLayout,
 		C3.Plugins.System.Cnds.Every,
@@ -4579,6 +4578,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Acts.SetText,
 		C3.Plugins.Sprite.Cnds.IsOverlapping,
 		C3.Plugins.Keyboard.Cnds.IsKeyDown,
+		C3.Plugins.System.Acts.SetVar,
 		C3.Plugins.Sprite.Acts.SetAnim,
 		C3.Behaviors.solid.Acts.SetEnabled,
 		C3.Plugins.Keyboard.Cnds.OnKey,
@@ -4586,7 +4586,8 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.Spawn,
 		C3.Behaviors.MoveTo.Acts.MoveToObject,
 		C3.Plugins.Sprite.Acts.Destroy,
-		C3.Plugins.Mouse.Cnds.OnObjectClicked
+		C3.Plugins.Mouse.Cnds.OnObjectClicked,
+		C3.Behaviors.EightDir.Acts.SimulateControl
 	];
 };
 self.C3_JsPropNameTable = [
@@ -4600,7 +4601,7 @@ self.C3_JsPropNameTable = [
 	{Sprite3: 0},
 	{Câmera3D: 0},
 	{Teclado: 0},
-	{perdeu: 0},
+	{Texto: 0},
 	{CentrarEm: 0},
 	{RestritoAoLayout: 0},
 	{"8Direções": 0},
@@ -4608,15 +4609,16 @@ self.C3_JsPropNameTable = [
 	{Áudio: 0},
 	{Sprite5: 0},
 	{Sprite6: 0},
-	{instruções2: 0},
+	{Texto2: 0},
 	{Sprite7: 0},
 	{Sprite8: 0},
 	{PlanoDeFundoEmBlocos: 0},
 	{Sprite9: 0},
 	{Sprite10: 0},
+	{Texto3: 0},
 	{Mouse: 0},
 	{Sprite11: 0},
-	{instruções: 0},
+	{Texto4: 0},
 	{Sprite12: 0},
 	{Âncora: 0},
 	{tempo: 0},
@@ -4628,7 +4630,8 @@ self.C3_JsPropNameTable = [
 	{Sprite17: 0},
 	{vida: 0},
 	{Variável1: 0},
-	{fogo: 0}
+	{fogo: 0},
+	{ivuneravel: 0}
 ];
 
 self.InstanceType = {
@@ -4639,20 +4642,21 @@ self.InstanceType = {
 	Sprite3: class extends self.ISpriteInstance {},
 	Câmera3D: class extends self.IInstance {},
 	Teclado: class extends self.IInstance {},
-	perdeu: class extends self.ITextInstance {},
+	Texto: class extends self.ITextInstance {},
 	Sprite4: class extends self.ISpriteInstance {},
 	Áudio: class extends self.IInstance {},
 	Sprite5: class extends self.ISpriteInstance {},
 	Sprite6: class extends self.ISpriteInstance {},
-	instruções2: class extends self.ITextInstance {},
+	Texto2: class extends self.ITextInstance {},
 	Sprite7: class extends self.ISpriteInstance {},
 	Sprite8: class extends self.ISpriteInstance {},
 	PlanoDeFundoEmBlocos: class extends self.ITiledBackgroundInstance {},
 	Sprite9: class extends self.ISpriteInstance {},
 	Sprite10: class extends self.ISpriteInstance {},
+	Texto3: class extends self.ITextInstance {},
 	Mouse: class extends self.IInstance {},
 	Sprite11: class extends self.ISpriteInstance {},
-	instruções: class extends self.ITextInstance {},
+	Texto4: class extends self.ITextInstance {},
 	Sprite12: class extends self.ISpriteInstance {},
 	tempo: class extends self.ITextInstance {},
 	Sprite13: class extends self.ISpriteInstance {},
@@ -4768,20 +4772,33 @@ self.C3_ExpressionFuncs = [
 		() => 2,
 		() => 600,
 		() => "perdeu",
-		() => 400,
 		() => 60,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => v0.GetValue();
 		},
 		() => 20,
+		() => "",
+		() => " ivuneravel",
 		() => "Animação 1",
 		() => 12,
 		() => 0,
-		() => "direita",
-		() => "esquerda",
-		() => "baixo",
-		() => "cima",
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => ("direita" + v0.GetValue());
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => ("esquerda" + v0.GetValue());
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => ("baixo" + v0.GetValue());
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => ("cima" + v0.GetValue());
+		},
 		() => "Animation 1",
 		() => 5
 ];
